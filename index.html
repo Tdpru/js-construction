@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #0A0A0A; }
+  * { box-sizing: border-box; }
+  a { color: #E3B968; text-decoration: none; }
+  a:hover { color: #F4D67A; }
+  ::selection { background: #B8860B; color: #0A0A0A; }
+  @keyframes jsDrop { 0% { transform: translateY(-6px); opacity: .2 } 55% { opacity: 1 } 100% { transform: translateY(10px); opacity: 0 } }
+  @keyframes jsSweep { 0% { transform: translateX(-100%) } 100% { transform: translateX(100%) } }
+</style>
+</helmet>
+
+
+
+<div style="background:#0A0A0A;color:#F5F5F4;font-family:Manrope,Helvetica,Arial,sans-serif;min-height:100vh;overflow-x:hidden">
+
+  <div style="position:sticky;top:0;z-index:50;background:rgba(10,10,10,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(227,185,104,.2)">
+    <div style="max-width:1320px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:18px">
+      <div sc-camel-on-click="{{ goAccueil }}" style="display:flex;align-items:center;gap:13px;cursor:pointer;flex:0 0 auto">
+        <img src="assets/images/logo-mark.png" alt="Logo JS Construction" style="width:44px;height:44px;object-fit:contain;display:block">
+        <div style="width:1px;height:36px;background:linear-gradient(180deg,rgba(227,185,104,0),#E3B968,rgba(227,185,104,0))"></div>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:18px;letter-spacing:.15em;line-height:1;color:#FFFFFF">JS <span style="color:#E3B968">CONSTRUCTION</span></div>
+          <div style="font-size:9px;letter-spacing:.36em;color:#8F8B84;font-weight:600">TRAVAUX RÉALISÉS</div>
+        </div>
+      </div>
+
+      <div style="flex:1 1 auto"></div>
+
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+        <nav style="display:flex;align-items:center;gap:2px">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+            <div sc-camel-on-click="{{ item.go }}" style="position:relative;padding:10px 15px;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;color:{{ item.color }};transition:color .25s ease">
+              {{ item.label }}
+              <div style="position:absolute;left:15px;right:15px;bottom:2px;height:1px;background:linear-gradient(90deg,#B8860B,#F4D67A);transform:scaleX({{ item.underline }});transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)"></div>
+            </div>
+          </sc-for>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:16px">
+          <a href="tel:+33616103281" style="font-family:Archivo,Helvetica,sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;color:#F5F5F4;white-space:nowrap;transition:color .2s ease" style-hover="color:#F4D67A">06 16 10 32 81</a>
+          <div sc-camel-on-click="{{ goContact }}" style="position:relative;overflow:hidden;padding:13px 22px;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-1px)" style-active="transform:translateY(1px)">Devis gratuit</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ narrow }}" hint-placeholder-val="{{ true }}">
+        <div sc-camel-on-click="{{ toggleMenu }}" style="min-width:58px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid rgba(227,185,104,.4);cursor:pointer;transition:background .2s ease" style-active="background:rgba(227,185,104,.12)">
+          <div ref="{{ bar1Ref }}" style="width:22px;height:2px;background:#F4D67A;transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .2s ease"></div>
+          <div ref="{{ bar2Ref }}" style="width:22px;height:2px;background:#F4D67A;transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .2s ease"></div>
+          <div ref="{{ bar3Ref }}" style="width:22px;height:2px;background:#F4D67A;transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .2s ease"></div>
+        </div>
+      </sc-if>
+    </div>
+
+    <div ref="{{ menuRef }}" style="max-height:0;opacity:0;overflow:hidden;transition:max-height .36s cubic-bezier(.2,.7,.2,1),opacity .25s ease">
+      <div style="border-top:1px solid rgba(227,185,104,.2);display:flex;flex-direction:column;padding:10px 16px 20px">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+          <div sc-camel-on-click="{{ item.go }}" style="min-height:58px;display:flex;align-items:center;gap:12px;padding:0 4px;font-family:Archivo,Helvetica,sans-serif;font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:{{ item.color }};border-bottom:1px solid rgba(245,245,244,.07);cursor:pointer">
+            <div style="width:7px;height:7px;background:linear-gradient(135deg,#B8860B,#F4D67A);transform:rotate(45deg);opacity:{{ item.underline }}"></div>
+            {{ item.label }}
+          </div>
+        </sc-for>
+        <a href="tel:+33616103281" style="margin-top:16px;min-height:60px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Appeler 06 16 10 32 81</a>
+      </div>
+    </div>
+    <div style="height:2px;background:linear-gradient(90deg,rgba(184,134,11,0),#B8860B 25%,#F4D67A 50%,#B8860B 75%,rgba(184,134,11,0));opacity:.5"></div>
+  </div>
+
+  <div ref="{{ pageRef }}" style="transition:opacity .22s ease,transform .22s ease">
+
+  <!-- ══════════ ACCUEIL ══════════ -->
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Accueil">
+      <div style="position:relative;min-height:min(88vh,860px);display:flex;align-items:stretch;overflow:hidden;border-bottom:1px solid rgba(227,185,104,.18)">
+        <div style="position:absolute;inset:0"><img src="assets/images/hero-maison.jpg" alt="Maison rénovée avec piscine" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(100deg,#0A0A0A 0%,rgba(10,10,10,.9) 38%,rgba(10,10,10,.4) 68%,rgba(10,10,10,.72) 100%);pointer-events:none"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 15% 100%,rgba(184,134,11,.16),transparent 60%);pointer-events:none"></div>
+
+        <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:26px;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:34px 0;pointer-events:none">
+            <div style="width:1px;flex:1;background:linear-gradient(180deg,rgba(227,185,104,0),rgba(227,185,104,.5))"></div>
+            <div style="writing-mode:vertical-rl;padding:18px 0;font-size:10px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;color:#8F8B84">Maçonnerie · Rénovation · Gros œuvre</div>
+            <div style="width:1px;flex:1;background:linear-gradient(180deg,rgba(227,185,104,.5),rgba(227,185,104,0))"></div>
+          </div>
+        </sc-if>
+
+        <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,120px) 20px clamp(40px,5vw,64px);width:100%;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none">
+          <div style="max-width:900px;display:flex;flex-direction:column;gap:clamp(20px,2.6vw,30px)">
+            <div data-reveal="1" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+              <div style="width:38px;height:1px;background:#E3B968"></div>
+              <div style="font-size:10.5px;font-weight:700;letter-spacing:.34em;color:#E3B968;text-transform:uppercase">Intervention partout en France</div>
+            </div>
+            <h1 data-reveal="1" style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(40px,8.2vw,104px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF;text-wrap:balance">Bâtir<br>solide,<br><span style="background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);-webkit-background-clip:text;background-clip:text;color:transparent">livrer net.</span></h1>
+            <p data-reveal="1" style="margin:0;font-size:clamp(15.5px,1.6vw,19px);line-height:1.62;color:#C6C2BA;max-width:600px;text-wrap:pretty">Maçonnerie générale, rénovation complète, gros œuvre, piscines maçonnées. Neuf métiers réunis dans une seule entreprise, un seul devis, un seul interlocuteur — du premier coup de crayon à la remise des clés.</p>
+            <div data-reveal="1" style="display:flex;gap:12px;flex-wrap:wrap;pointer-events:auto">
+              <div sc-camel-on-click="{{ goContact }}" style="min-height:58px;display:flex;align-items:center;padding:0 30px;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-2px)" style-active="transform:translateY(1px)">Devis gratuit</div>
+              <div sc-camel-on-click="{{ goRealisations }}" style="min-height:58px;display:flex;align-items:center;padding:0 30px;border:1px solid rgba(227,185,104,.5);color:#F4D67A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:background .25s ease,border-color .25s ease,transform .2s ease" style-hover="background:rgba(227,185,104,.12);border-color:#F4D67A;transform:translateY(-2px)" style-active="transform:translateY(1px)">Voir les réalisations</div>
+            </div>
+          </div>
+
+          <div data-reveal="1" style="margin-top:clamp(34px,4.4vw,58px);padding-top:24px;border-top:1px solid rgba(227,185,104,.24);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:22px 30px">
+            <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-family:Archivo,Helvetica,sans-serif;font-size:clamp(19px,2.4vw,27px);font-weight:800;letter-spacing:.01em;color:#F4D67A;line-height:1">{{ f.k }}</div>
+                <div style="font-size:12.5px;line-height:1.45;color:#94908A">{{ f.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;right:30px;bottom:34px;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none">
+            <div style="font-size:9.5px;font-weight:700;letter-spacing:.3em;color:#7A756D;text-transform:uppercase">Scroll</div>
+            <div style="width:1px;height:56px;background:rgba(227,185,104,.25);position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;width:1px;height:18px;background:#F4D67A;animation:jsDrop 2s ease-in-out infinite"></div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,8vw,110px) 20px clamp(20px,3vw,32px)">
+        <div data-reveal="1" style="display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,46px)">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-family:Archivo,Helvetica,sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;color:#7A756D">01</span>
+              <span style="width:22px;height:1px;background:rgba(227,185,104,.6)"></span>
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Nos savoir-faire</span>
+            </div>
+            <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(28px,4.6vw,56px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#FFFFFF">Neuf métiers,<br>un seul chantier</h2>
+          </div>
+          <div sc-camel-on-click="{{ goSavoirFaire }}" style="min-height:50px;display:flex;align-items:center;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E3B968;cursor:pointer;border-bottom:1px solid rgba(227,185,104,.4);transition:color .2s ease,border-color .2s ease" style-hover="color:#F4D67A;border-color:#F4D67A">Tout le détail →</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px">
+          <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+            <div data-reveal="1" sc-camel-on-click="{{ goSavoirFaire }}" style="position:relative;background:#101010;border:1px solid rgba(245,245,244,.08);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:rgba(227,185,104,.6);transform:translateY(-4px)">
+              <div style="position:relative;height:210px;overflow:hidden">
+                <div style="position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.07)">
+                  <img src="{{ s.img }}" alt="{{ s.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                </div>
+                <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,16,16,.96),rgba(16,16,16,.15) 60%,rgba(10,10,10,.4));pointer-events:none"></div>
+                <div style="position:absolute;top:14px;left:14px;font-family:Archivo,Helvetica,sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;color:#E3B968;pointer-events:none">{{ s.num }}</div>
+              </div>
+              <div style="padding:20px 22px 26px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-family:Archivo,Helvetica,sans-serif;font-size:19px;font-weight:800;letter-spacing:.045em;text-transform:uppercase;color:#FFFFFF">{{ s.title }}</div>
+                <div style="height:1px;background:linear-gradient(90deg,rgba(227,185,104,.55),rgba(227,185,104,0))"></div>
+                <div style="font-size:14.5px;line-height:1.6;color:#A19D96;text-wrap:pretty">{{ s.short }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,7vw,96px) 20px">
+        <div data-reveal="1" style="position:relative;background:#0E0E0D;border:1px solid rgba(227,185,104,.22);padding:clamp(28px,4.4vw,64px);overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(184,134,11,0),#F4D67A,rgba(184,134,11,0))"></div>
+          <div style="display:flex;flex-direction:column;gap:clamp(28px,3.6vw,46px)">
+            <div style="display:flex;flex-direction:column;gap:14px;max-width:660px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-family:Archivo,Helvetica,sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;color:#7A756D">02</span>
+                <span style="width:22px;height:1px;background:rgba(227,185,104,.6)"></span>
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Ce qui fait la différence</span>
+              </div>
+              <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(26px,4vw,46px);line-height:1.04;letter-spacing:-.015em;text-transform:uppercase;color:#FFFFFF">Pourquoi JS Construction</h2>
+              <p style="margin:0;font-size:15.5px;line-height:1.65;color:#A19D96;text-wrap:pretty">L'exigence du gros œuvre appliquée à chaque étape du chantier, du garage à la piscine maçonnée, avec une équipe qui maîtrise l'ensemble des corps d'état.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px 40px">
+              <sc-for list="{{ reassurance }}" as="r" hint-placeholder-count="4">
+                <div data-reveal="1" style="display:flex;flex-direction:column;gap:11px;border-top:1px solid rgba(227,185,104,.3);padding-top:18px">
+                  <div style="font-family:Archivo,Helvetica,sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#F4D67A">{{ r.t }}</div>
+                  <div style="font-size:14px;line-height:1.62;color:#A19D96;text-wrap:pretty">{{ r.d }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width:1320px;margin:0 auto;padding:clamp(20px,3vw,32px) 20px clamp(64px,8vw,100px)">
+        <div data-reveal="1" style="display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap;margin-bottom:clamp(26px,3.4vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-family:Archivo,Helvetica,sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;color:#7A756D">03</span>
+              <span style="width:22px;height:1px;background:rgba(227,185,104,.6)"></span>
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Réalisations</span>
+            </div>
+            <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(28px,4.6vw,56px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#FFFFFF">Avant. Après.<br>Sans retouche.</h2>
+          </div>
+          <div sc-camel-on-click="{{ goRealisations }}" style="min-height:50px;display:flex;align-items:center;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E3B968;cursor:pointer;border-bottom:1px solid rgba(227,185,104,.4);transition:color .2s ease,border-color .2s ease" style-hover="color:#F4D67A;border-color:#F4D67A">Toutes nos réalisations →</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <sc-for list="{{ apercu }}" as="p" hint-placeholder-count="3">
+            <div data-reveal="1" sc-camel-on-click="{{ goRealisations }}" style="border:1px solid rgba(245,245,244,.08);background:#101010;cursor:pointer;display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:rgba(227,185,104,.55);transform:translateY(-4px)">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(227,185,104,.28)">
+                <div style="position:relative;height:210px;overflow:hidden">
+                  <img src="{{ p.beforeImg }}" alt="{{ p.title }} avant" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;top:10px;left:10px;padding:5px 9px;background:rgba(8,8,7,.86);font-family:Archivo,Helvetica,sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.2em;color:#B9B5AE;pointer-events:none">AVANT</div>
+                </div>
+                <div style="position:relative;height:210px;overflow:hidden">
+                  <img src="{{ p.afterImg }}" alt="{{ p.title }} après" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;top:10px;left:10px;padding:5px 9px;background:linear-gradient(135deg,#B8860B,#F4D67A);font-family:Archivo,Helvetica,sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.2em;color:#0A0A0A;pointer-events:none">APRÈS</div>
+                </div>
+              </div>
+              <div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px">
+                <div style="font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#7A756D">{{ p.cat }}</div>
+                <div style="font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;color:#FFFFFF">{{ p.title }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(227,185,104,.2);background:#0C0C0B">
+        <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,7vw,92px) 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(30px,4vw,54px);align-items:center">
+          <div data-reveal="1" style="display:flex;flex-direction:column;gap:18px">
+            <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(28px,4.4vw,50px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#FFFFFF">Un projet ?<br><span style="background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);-webkit-background-clip:text;background-clip:text;color:transparent">Parlons-en.</span></h2>
+            <p style="margin:0;font-size:15.5px;line-height:1.65;color:#A19D96;max-width:480px;text-wrap:pretty">Devis gratuit et sans engagement. Réponse sous 48 h ouvrées, visite sur place partout en France.</p>
+          </div>
+          <div data-reveal="1" style="display:flex;flex-direction:column;gap:10px">
+            <a href="tel:+33616103281" style="min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 24px;border:1px solid rgba(227,185,104,.32);background:#101010;transition:border-color .25s ease,transform .25s ease" style-hover="border-color:#F4D67A;transform:translateX(3px)">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Téléphone</span>
+              <span style="font-family:Archivo,Helvetica,sans-serif;font-size:20px;font-weight:800;letter-spacing:.05em;color:#F5F5F4">06 16 10 32 81</span>
+            </a>
+            <a href="mailto:jsconstruction5834@gmail.com" style="min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 24px;border:1px solid rgba(227,185,104,.32);background:#101010;flex-wrap:wrap;transition:border-color .25s ease,transform .25s ease" style-hover="border-color:#F4D67A;transform:translateX(3px)">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Email</span>
+              <span style="font-size:15px;font-weight:600;color:#F5F5F4;overflow-wrap:anywhere">jsconstruction5834@gmail.com</span>
+            </a>
+            <div sc-camel-on-click="{{ goContact }}" style="min-height:70px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-2px)" style-active="transform:translateY(1px)">Demander mon devis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════════ SAVOIR-FAIRE ══════════ -->
+  <sc-if value="{{ isSavoirFaire }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Nos savoir-faire" style="max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,88px) 20px clamp(64px,8vw,100px)">
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:16px;max-width:780px;margin-bottom:clamp(38px,5vw,64px)">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="width:38px;height:1px;background:#E3B968"></span>
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Nos savoir-faire</span>
+        </div>
+        <h1 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(34px,6.4vw,76px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">Neuf métiers<br>maîtrisés en interne</h1>
+        <p style="margin:0;font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:#A19D96;text-wrap:pretty">De la fondation à la peinture, JS Construction pilote l'ensemble des corps d'état d'un chantier de maçonnerie et de rénovation. Un seul devis, un seul responsable de chantier, des délais tenus.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+          <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;display:grid;grid-template-columns:{{ s.cols }};overflow:hidden;transition:border-color .3s ease" style-hover="border-color:rgba(227,185,104,.5)">
+            <div style="padding:clamp(24px,3.6vw,48px);display:flex;flex-direction:column;gap:16px;order:{{ s.textOrder }}">
+              <div style="display:flex;align-items:center;gap:14px">
+                <div style="font-family:Archivo,Helvetica,sans-serif;font-size:clamp(30px,4vw,46px);font-weight:900;letter-spacing:-.01em;line-height:.9;color:transparent;-webkit-text-stroke:1px rgba(227,185,104,.55)">{{ s.num }}</div>
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(227,185,104,.5),rgba(227,185,104,0))"></div>
+              </div>
+              <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:clamp(22px,2.9vw,34px);font-weight:900;letter-spacing:.02em;text-transform:uppercase;color:#FFFFFF;line-height:1.04">{{ s.title }}</h2>
+              <p style="margin:0;font-size:15.5px;line-height:1.66;color:#A19D96;text-wrap:pretty">{{ s.long }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:4px">
+                <sc-for list="{{ s.tags }}" as="t" hint-placeholder-count="4">
+                  <div style="min-height:38px;display:flex;align-items:center;padding:0 14px;border:1px solid rgba(227,185,104,.26);font-size:12px;font-weight:600;letter-spacing:.06em;color:#D6D2CA;transition:border-color .25s ease,color .25s ease" style-hover="border-color:#F4D67A;color:#F4D67A">{{ t }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="position:relative;min-height:300px;overflow:hidden;order:{{ s.imgOrder }}">
+              <div style="position:absolute;inset:0;transition:transform .6s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
+                <img src="{{ s.img }}" alt="{{ s.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+              <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,16,.55),transparent 45%);pointer-events:none"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-reveal="1" style="margin-top:clamp(38px,5vw,60px);padding:clamp(28px,4vw,52px);border:1px solid rgba(227,185,104,.26);background:#0E0E0D;display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:Archivo,Helvetica,sans-serif;font-size:clamp(20px,2.6vw,30px);font-weight:900;letter-spacing:.01em;text-transform:uppercase;color:#FFFFFF">Votre chantier entre dans une de ces catégories ?</div>
+          <div style="font-size:15px;color:#A19D96">Décrivez-le nous, le devis est gratuit.</div>
+        </div>
+        <div sc-camel-on-click="{{ goContact }}" style="min-height:58px;display:flex;align-items:center;padding:0 30px;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-2px)" style-active="transform:translateY(1px)">Demander un devis</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════════ RÉALISATIONS ══════════ -->
+  <sc-if value="{{ isRealisations }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Réalisations" style="max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,88px) 20px clamp(64px,8vw,100px)">
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:16px;max-width:780px;margin-bottom:clamp(28px,3.6vw,42px)">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="width:38px;height:1px;background:#E3B968"></span>
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Réalisations</span>
+        </div>
+        <h1 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(34px,6.4vw,76px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">Avant / après</h1>
+        <p style="margin:0;font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:#A19D96;text-wrap:pretty">Chaque chantier est montré au même endroit, sous le même angle, avant les travaux et à la livraison. C'est la manière la plus honnête de juger une entreprise de maçonnerie.</p>
+      </div>
+
+      <div data-reveal="1" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:clamp(22px,3vw,32px);border-bottom:1px solid rgba(245,245,244,.1);padding-bottom:20px">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <div sc-camel-on-click="{{ f.go }}" style="min-height:50px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:12.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;cursor:pointer;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};transition:border-color .25s ease,background .25s ease,color .25s ease" style-hover="border-color:#F4D67A;color:#F4D67A">{{ f.label }} <span style="opacity:.55;font-size:11px">{{ f.count }}</span></div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">
+        <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="6">
+          <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:rgba(227,185,104,.55);transform:translateY(-4px)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(227,185,104,.28)">
+              <div style="position:relative;height:clamp(200px,24vw,270px);overflow:hidden">
+                <div style="position:absolute;inset:0;transition:transform .55s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
+                  <img src="{{ g.beforeImg }}" alt="{{ g.title }} avant" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                </div>
+                <div style="position:absolute;top:12px;left:12px;padding:6px 10px;background:rgba(8,8,7,.86);border:1px solid rgba(245,245,244,.16);font-family:Archivo,Helvetica,sans-serif;font-size:10px;font-weight:800;letter-spacing:.2em;color:#B9B5AE;pointer-events:none">AVANT</div>
+              </div>
+              <div style="position:relative;height:clamp(200px,24vw,270px);overflow:hidden">
+                <div style="position:absolute;inset:0;transition:transform .55s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
+                  <img src="{{ g.afterImg }}" alt="{{ g.title }} après" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                </div>
+                <div style="position:absolute;top:12px;left:12px;padding:6px 10px;background:linear-gradient(135deg,#B8860B,#F4D67A);font-family:Archivo,Helvetica,sans-serif;font-size:10px;font-weight:800;letter-spacing:.2em;color:#0A0A0A;pointer-events:none">APRÈS</div>
+              </div>
+            </div>
+            <div style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#7A756D">{{ g.cat }}</div>
+              <div style="font-family:Archivo,Helvetica,sans-serif;font-size:19px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;color:#FFFFFF">{{ g.title }}</div>
+              <div style="height:1px;background:linear-gradient(90deg,rgba(227,185,104,.5),rgba(227,185,104,0))"></div>
+              <div style="font-size:14.5px;line-height:1.62;color:#A19D96;text-wrap:pretty">{{ g.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-reveal="1" style="margin-top:clamp(38px,5vw,60px);display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center">
+        <div style="font-size:15.5px;color:#A19D96;max-width:520px;text-wrap:pretty">Un chantier similaire au vôtre ? Nous pouvons vous mettre en relation avec nos clients.</div>
+        <div sc-camel-on-click="{{ goContact }}" style="min-height:58px;display:flex;align-items:center;padding:0 30px;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-2px)" style-active="transform:translateY(1px)">Demander un devis gratuit</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Contact" style="max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,88px) 20px clamp(64px,8vw,100px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(30px,4vw,54px);align-items:start">
+        <div data-reveal="1" style="display:flex;flex-direction:column;gap:26px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="width:38px;height:1px;background:#E3B968"></span>
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Contact</span>
+            </div>
+            <h1 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(32px,5.6vw,64px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">Devis gratuit<br>sous 48 h</h1>
+            <p style="margin:0;font-size:16px;line-height:1.66;color:#A19D96;max-width:470px;text-wrap:pretty">Décrivez votre projet en quelques lignes. Notre équipe vous rappelle pour convenir d'une visite sur place, gratuite et sans engagement.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="tel:+33616103281" style="min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 24px;border:1px solid rgba(227,185,104,.32);background:#101010;transition:border-color .25s ease,transform .25s ease" style-hover="border-color:#F4D67A;transform:translateX(3px)">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Téléphone</span>
+              <span style="font-family:Archivo,Helvetica,sans-serif;font-size:20px;font-weight:800;letter-spacing:.05em;color:#F5F5F4">06 16 10 32 81</span>
+            </a>
+            <a href="mailto:jsconstruction5834@gmail.com" style="min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 24px;border:1px solid rgba(227,185,104,.32);background:#101010;flex-wrap:wrap;transition:border-color .25s ease,transform .25s ease" style-hover="border-color:#F4D67A;transform:translateX(3px)">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Email</span>
+              <span style="font-size:14.5px;font-weight:600;color:#F5F5F4;overflow-wrap:anywhere">jsconstruction5834@gmail.com</span>
+            </a>
+            <div style="padding:20px 24px;border:1px solid rgba(245,245,244,.12);background:#101010;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Zone d'intervention</span>
+              <span style="font-size:15px;color:#F5F5F4;font-weight:600">Toute la France</span>
+              <span style="font-size:13.5px;line-height:1.6;color:#8F8B84">Nos équipes se déplacent sur l'ensemble du territoire, en métropole comme en régions, pour les chantiers de maçonnerie, de rénovation et de piscine. Déplacement et étude chiffrés dans le devis.</span>
+            </div>
+            <div style="padding:20px 24px;border:1px solid rgba(245,245,244,.12);background:#101010;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#8F8B84">Horaires</span>
+              <span style="font-size:14.5px;color:#C6C2BA">Lundi — vendredi, 7 h 30 – 18 h 00. Samedi sur rendez-vous.</span>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal="1" style="position:relative;border:1px solid rgba(227,185,104,.26);background:#0E0E0D;padding:clamp(24px,3.6vw,44px);overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(184,134,11,0),#F4D67A,rgba(184,134,11,0))"></div>
+          <sc-if value="{{ formSent }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+              <div style="width:16px;height:16px;background:linear-gradient(135deg,#B8860B,#F4D67A);transform:rotate(45deg)"></div>
+              <div style="font-family:Archivo,Helvetica,sans-serif;font-size:26px;font-weight:900;letter-spacing:.03em;text-transform:uppercase;color:#FFFFFF">Demande envoyée</div>
+              <p style="margin:0;font-size:15.5px;line-height:1.66;color:#A19D96">Merci, votre demande est bien enregistrée. Nous vous rappelons sous 48 h ouvrées au numéro indiqué. Pour un projet urgent, appelez directement le 06 16 10 32 81.</p>
+              <div sc-camel-on-click="{{ resetForm }}" style="min-height:52px;display:flex;align-items:center;padding:0 24px;border:1px solid rgba(227,185,104,.45);color:#F4D67A;font-family:Archivo,Helvetica,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .25s ease" style-hover="background:rgba(227,185,104,.12)">Envoyer une autre demande</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:18px">
+              <div style="font-family:Archivo,Helvetica,sans-serif;font-size:19px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF">Votre projet</div>
+              <div style="height:1px;background:linear-gradient(90deg,#B8860B,rgba(184,134,11,0))"></div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <label style="font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8F8B84">Nom et prénom *</label>
+                  <input type="text" sc-camel-auto-complete="name" value="{{ fNom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom et prénom" style="padding:16px;min-height:54px;background:#151413;border:1px solid rgba(245,245,244,.14);color:#F5F5F4;font-family:Manrope,sans-serif;font-size:16px;outline:none;transition:border-color .25s ease" style-focus="border-color:#E3B968">
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <label style="font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8F8B84">Téléphone *</label>
+                  <input type="tel" sc-camel-input-mode="tel" sc-camel-auto-complete="tel" value="{{ fTel }}" sc-camel-on-change="{{ onTel }}" placeholder="06 00 00 00 00" style="padding:16px;min-height:54px;background:#151413;border:1px solid rgba(245,245,244,.14);color:#F5F5F4;font-family:Manrope,sans-serif;font-size:16px;outline:none;transition:border-color .25s ease" style-focus="border-color:#E3B968">
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8F8B84">Email</label>
+                <input type="email" sc-camel-input-mode="email" sc-camel-auto-complete="email" value="{{ fEmail }}" sc-camel-on-change="{{ onEmail }}" placeholder="vous@email.fr" style="padding:16px;min-height:54px;background:#151413;border:1px solid rgba(245,245,244,.14);color:#F5F5F4;font-family:Manrope,sans-serif;font-size:16px;outline:none;transition:border-color .25s ease" style-focus="border-color:#E3B968">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <label style="font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8F8B84">Type de projet *</label>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ projectTypes }}" as="p" hint-placeholder-count="9">
+                    <div sc-camel-on-click="{{ p.go }}" style="min-height:50px;display:flex;align-items:center;padding:0 16px;font-size:13.5px;font-weight:600;letter-spacing:.04em;cursor:pointer;border:1px solid {{ p.border }};background:{{ p.bg }};color:{{ p.color }};transition:border-color .22s ease,background .22s ease,color .22s ease" style-hover="border-color:#F4D67A;color:#F4D67A">{{ p.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8F8B84">Votre message</label>
+                <textarea value="{{ fMsg }}" sc-camel-on-change="{{ onMsg }}" rows="5" placeholder="Surface, adresse du chantier, délais souhaités…" style="padding:16px;min-height:120px;background:#151413;border:1px solid rgba(245,245,244,.14);color:#F5F5F4;font-family:Manrope,sans-serif;font-size:16px;outline:none;resize:vertical;transition:border-color .25s ease" style-focus="border-color:#E3B968"></textarea>
+              </div>
+              <div style="min-height:56px;padding:14px 16px;border:1px dashed rgba(245,245,244,.18);display:flex;align-items:center;gap:12px">
+                <div style="width:9px;height:9px;background:#5C5850;transform:rotate(45deg);flex:0 0 auto"></div>
+                <div style="font-size:13px;color:#8F8B84">Joindre des photos (JPG, PNG — 5 Mo max) — facultatif</div>
+              </div>
+              <sc-if value="{{ formError }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:13.5px;color:#E88B6B">Merci de renseigner votre nom, votre téléphone et le type de projet.</div>
+              </sc-if>
+              <div sc-camel-on-click="{{ submitForm }}" style="min-height:60px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);color:#0A0A0A;font-family:Archivo,Helvetica,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:filter .2s ease,transform .2s ease" style-hover="filter:brightness(1.14);transform:translateY(-2px)" style-active="transform:translateY(1px)">Envoyer ma demande</div>
+              <div style="font-size:12px;color:#6F6B64;line-height:1.55">Vos coordonnées servent uniquement à répondre à votre demande et ne sont jamais transmises à un tiers.</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════════ MENTIONS LÉGALES ══════════ -->
+  <sc-if value="{{ isLegal }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Mentions légales" style="max-width:900px;margin:0 auto;padding:clamp(44px,5.5vw,76px) 20px clamp(64px,8vw,96px)">
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(30px,4vw,46px)">
+        <div style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Informations légales</div>
+        <h1 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(30px,5vw,54px);line-height:1;letter-spacing:-.018em;text-transform:uppercase;color:#FFFFFF">Mentions légales</h1>
+        <div style="height:2px;background:linear-gradient(90deg,#B8860B,#F4D67A,rgba(184,134,11,0));max-width:220px"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Éditeur du site</h2>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;flex-wrap:wrap;gap:6px 14px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7A756D;min-width:190px">Dénomination</span><span style="font-size:15px;color:#E8E4DC">JS Construction — SASU au capital social de 100 €</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 14px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7A756D;min-width:190px">Siège social</span><span style="font-size:15px;color:#E8E4DC">2 Rue du Moulin à Vent, 58000 Nevers</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 14px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7A756D;min-width:190px">RCS</span><span style="font-size:15px;color:#E8E4DC">RCS Nevers n° 107 129 876 — immatriculée le 07/07/2026</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 14px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7A756D;min-width:190px">EUID</span><span style="font-size:15px;color:#E8E4DC">FR5802.107129876</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 14px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7A756D;min-width:190px">Directeur de la publication</span><span style="font-size:15px;color:#E8E4DC">Sébastien Grégory Montabrun, Président</span></div>
+          </div>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Contact</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="tel:+33616103281" style="min-height:52px;display:flex;align-items:center;padding:0 22px;border:1px solid rgba(227,185,104,.35);font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:700;letter-spacing:.05em;color:#F5F5F4;transition:border-color .25s ease" style-hover="border-color:#F4D67A">06 16 10 32 81</a>
+            <a href="mailto:jsconstruction5834@gmail.com" style="min-height:52px;display:flex;align-items:center;padding:14px 22px;border:1px solid rgba(227,185,104,.35);font-size:15px;font-weight:600;color:#F5F5F4;overflow-wrap:anywhere;max-width:100%;transition:border-color .25s ease" style-hover="border-color:#F4D67A">jsconstruction5834@gmail.com</a>
+          </div>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Hébergement</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96">[À compléter une fois l'hébergeur définitif du site choisi]</p>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Propriété intellectuelle</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">L'ensemble des contenus de ce site — textes, photographies de chantiers, logo et éléments graphiques — est la propriété de JS Construction. Toute reproduction, représentation ou réutilisation, totale ou partielle, est interdite sans autorisation écrite préalable de l'entreprise.</p>
+        </div>
+      </div>
+
+      <div data-reveal="1" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap">
+        <div sc-camel-on-click="{{ goPrivacy }}" style="min-height:52px;display:flex;align-items:center;padding:0 24px;border:1px solid rgba(227,185,104,.45);color:#F4D67A;font-family:Archivo,Helvetica,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .25s ease" style-hover="background:rgba(227,185,104,.12)">Politique de confidentialité</div>
+        <div sc-camel-on-click="{{ goAccueil }}" style="min-height:52px;display:flex;align-items:center;padding:0 24px;border:1px solid rgba(245,245,244,.18);color:#B9B5AE;font-family:Archivo,Helvetica,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:border-color .25s ease,color .25s ease" style-hover="border-color:#F4D67A;color:#F4D67A">Retour à l'accueil</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════════ CONFIDENTIALITÉ ══════════ -->
+  <sc-if value="{{ isPrivacy }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Confidentialité" style="max-width:900px;margin:0 auto;padding:clamp(44px,5.5vw,76px) 20px clamp(64px,8vw,96px)">
+      <div data-reveal="1" style="display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(30px,4vw,46px)">
+        <div style="font-size:10.5px;font-weight:700;letter-spacing:.32em;color:#E3B968;text-transform:uppercase">Données personnelles</div>
+        <h1 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:clamp(28px,4.6vw,52px);line-height:1;letter-spacing:-.018em;text-transform:uppercase;color:#FFFFFF">Politique de confidentialité</h1>
+        <div style="height:2px;background:linear-gradient(90deg,#B8860B,#F4D67A,rgba(184,134,11,0));max-width:220px"></div>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:#A19D96;text-wrap:pretty">JS Construction collecte le minimum d'informations nécessaires au traitement d'une demande de devis. Aucune donnée n'est revendue, ni utilisée à des fins publicitaires.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Responsable du traitement</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96">JS Construction, SASU dont le siège social est situé 2 Rue du Moulin à Vent, 58000 Nevers.</p>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Données collectées</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">Les seules données collectées le sont via le formulaire de contact : nom et prénom, numéro de téléphone, adresse email, type de projet, message et, le cas échéant, les photographies que vous joignez à votre demande.</p>
+          <div style="padding:16px 18px;border:1px dashed rgba(227,185,104,.5);background:rgba(227,185,104,.06);font-size:14px;line-height:1.65;color:#E3B968">Ce site ne comporte ni compte utilisateur, ni espace de connexion : aucune donnée n'y est stockée en dehors des demandes de devis reçues par email.</div>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Finalité et base légale</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">Ces données servent uniquement à répondre à votre demande, établir un devis et organiser une éventuelle visite de chantier. Le traitement repose sur l'intérêt légitime de l'entreprise dans le cadre de la relation précontractuelle que vous engagez en nous contactant.</p>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Destinataires et conservation</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">Vos données sont traitées uniquement par JS Construction et ne sont jamais transmises, cédées ou revendues à un tiers. Elles sont conservées le temps nécessaire au traitement de votre demande, puis supprimées.</p>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Vos droits</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant, ainsi que d'un droit d'opposition et de limitation du traitement. Ces droits s'exercent par simple demande par email.</p>
+          <a href="mailto:jsconstruction5834@gmail.com" style="min-height:52px;display:flex;align-items:center;padding:14px 22px;border:1px solid rgba(227,185,104,.35);font-size:15px;font-weight:600;color:#F5F5F4;overflow-wrap:anywhere;max-width:100%;transition:border-color .25s ease" style-hover="border-color:#F4D67A">jsconstruction5834@gmail.com</a>
+        </div>
+
+        <div data-reveal="1" style="border:1px solid rgba(245,245,244,.08);background:#101010;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:Archivo,Helvetica,sans-serif;font-size:17px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#F4D67A">Cookies</h2>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#A19D96;text-wrap:pretty">Ce site n'utilise aucun cookie de suivi, aucune régie publicitaire et aucun outil de mesure d'audience tiers. Aucun consentement n'est donc requis pour le consulter.</p>
+        </div>
+      </div>
+
+      <div data-reveal="1" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap">
+        <div sc-camel-on-click="{{ goLegal }}" style="min-height:52px;display:flex;align-items:center;padding:0 24px;border:1px solid rgba(227,185,104,.45);color:#F4D67A;font-family:Archivo,Helvetica,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .25s ease" style-hover="background:rgba(227,185,104,.12)">Mentions légales</div>
+        <div sc-camel-on-click="{{ goAccueil }}" style="min-height:52px;display:flex;align-items:center;padding:0 24px;border:1px solid rgba(245,245,244,.18);color:#B9B5AE;font-family:Archivo,Helvetica,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:border-color .25s ease,color .25s ease" style-hover="border-color:#F4D67A;color:#F4D67A">Retour à l'accueil</div>
+      </div>
+    </div>
+  </sc-if>
+
+  </div>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <div style="border-top:1px solid rgba(227,185,104,.2);background:#080807">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,5.5vw,66px) 20px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="assets/images/logo-footer.png" alt="Logo JS Construction" style="width:42px;height:42px;object-fit:contain;display:block">
+          <div style="width:1px;height:34px;background:linear-gradient(180deg,rgba(227,185,104,0),#E3B968,rgba(227,185,104,0))"></div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:16px;letter-spacing:.14em;color:#FFFFFF">JS <span style="color:#E3B968">CONSTRUCTION</span></div>
+            <div style="font-size:8.5px;letter-spacing:.34em;color:#7A756D;font-weight:600">TRAVAUX RÉALISÉS</div>
+          </div>
+        </div>
+        <div style="font-size:13.5px;line-height:1.62;color:#8F8B84">Maçonnerie générale, rénovation, gros œuvre, piscines, terrassement, climatisation, plomberie, électricité, placo et peinture — partout en France.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E3B968">Navigation</div>
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+          <div sc-camel-on-click="{{ item.go }}" style="min-height:34px;display:flex;align-items:center;font-size:14px;color:#A19D96;cursor:pointer;width:fit-content;transition:color .2s ease" style-hover="color:#F4D67A">{{ item.label }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E3B968">Contact</div>
+        <a href="tel:+33616103281" style="min-height:34px;display:flex;align-items:center;font-size:14px;color:#A19D96" style-hover="color:#F4D67A">06 16 10 32 81</a>
+        <a href="mailto:jsconstruction5834@gmail.com" style="min-height:34px;display:flex;align-items:center;font-size:14px;color:#A19D96;overflow-wrap:anywhere" style-hover="color:#F4D67A">jsconstruction5834@gmail.com</a>
+        <div style="font-size:14px;color:#A19D96">Interventions sur toute la France</div>
+        <div style="font-size:14px;color:#A19D96">Lun — ven, 7 h 30 – 18 h 00</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#E3B968">L'entreprise</div>
+        <div style="font-size:13.5px;line-height:1.72;color:#8F8B84">JS Construction — SASU au capital de 100 €<br>RCS Nevers n° 107 129 876<br>Immatriculée le 07/07/2026<br>Assurance responsabilité civile professionnelle</div>
+      </div>
+    </div>
+    <div style="height:1px;background:linear-gradient(90deg,rgba(184,134,11,0),rgba(227,185,104,.45),rgba(184,134,11,0))"></div>
+    <div style="max-width:1320px;margin:0 auto;padding:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <div style="font-size:12px;color:#5C5850">© 2026 JS Construction — Tous droits réservés</div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div sc-camel-on-click="{{ goLegal }}" style="min-height:32px;display:flex;align-items:center;font-size:12px;color:#8F8B84;cursor:pointer;transition:color .2s ease" style-hover="color:#F4D67A">Mentions légales</div>
+        <div sc-camel-on-click="{{ goPrivacy }}" style="min-height:32px;display:flex;align-items:center;font-size:12px;color:#8F8B84;cursor:pointer;transition:color .2s ease" style-hover="color:#F4D67A">Politique de confidentialité</div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ narrow }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="height:84px"></div>
+      <div style="position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:1px;background:rgba(227,185,104,.3);padding-top:1px">
+        <a href="tel:+33616103281" style="flex:1;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:#0C0C0B;color:#F5F5F4;text-decoration:none">
+          <span style="font-family:Archivo,Helvetica,sans-serif;font-size:16px;font-weight:800;letter-spacing:.05em">Appeler</span>
+          <span style="font-size:11.5px;color:#8F8B84">06 16 10 32 81</span>
+        </a>
+        <div sc-camel-on-click="{{ goContact }}" style="flex:1;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:linear-gradient(135deg,#B8860B,#F4D67A 55%,#C99A2E);cursor:pointer">
+          <span style="font-family:Archivo,Helvetica,sans-serif;font-size:16px;font-weight:800;letter-spacing:.05em;color:#0A0A0A">Devis gratuit</span>
+          <span style="font-size:11.5px;color:rgba(10,10,10,.7)">Réponse sous 48 h</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{}">
+const GOLD = '#E3B968';
+const AD = 'Photo pro cohérente golden hour, lumière dorée rasante, grain fin, tons noir/or —';
+
+class Component extends DCLogic {
+  state = {
+    page: 'accueil', filter: 'tout', menuOpen: false, narrow: true,
+    fNom: '', fTel: '', fEmail: '', fMsg: '', fType: '', formError: false, sent: false
+  };
+  pageRef = React.createRef();
+  menuRef = React.createRef();
+  bar1Ref = React.createRef();
+  bar2Ref = React.createRef();
+  bar3Ref = React.createRef();
+
+  componentDidMount() {
+    this.measure = () => {
+      const n = window.innerWidth < 900;
+      if (n !== this.state.narrow) this.setState({ narrow: n, menuOpen: false });
+    };
+    this.measure();
+    window.addEventListener('resize', this.measure);
+
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const sibs = el.parentElement ? Array.from(el.parentElement.children).filter(c => c.hasAttribute('data-reveal')) : [el];
+        const i = Math.max(0, sibs.indexOf(el));
+        el.style.transitionDelay = Math.min(i, 7) * 70 + 'ms';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.setAttribute('data-reveal', 'done');
+        this.io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    this.scan();
+    this.fallback = setTimeout(() => this.revealAll(), 1600);
+  }
+
+  componentDidUpdate() { this.scan(); this.syncMenu(); }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.measure);
+    if (this.io) this.io.disconnect();
+    clearTimeout(this.fallback);
+    clearTimeout(this.navTimer);
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll('[data-reveal="1"]').forEach((el) => {
+      if (el.dataset.revealInit !== 'y') {
+        el.dataset.revealInit = 'y';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity .5s ease, transform .55s cubic-bezier(.2,.7,.2,1)';
+        el.style.willChange = 'opacity, transform';
+      }
+      this.io.observe(el);
+    });
+  }
+
+  revealAll() {
+    document.querySelectorAll('[data-reveal="1"]').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.setAttribute('data-reveal', 'done');
+    });
+  }
+
+  syncMenu() {
+    const m = this.menuRef.current;
+    const open = this.state.narrow && this.state.menuOpen;
+    if (m) {
+      m.style.maxHeight = open ? '520px' : '0px';
+      m.style.opacity = open ? '1' : '0';
+    }
+    const b1 = this.bar1Ref.current, b2 = this.bar2Ref.current, b3 = this.bar3Ref.current;
+    if (b1 && b2 && b3) {
+      b1.style.transform = open ? 'translateY(7px) rotate(45deg)' : 'none';
+      b2.style.opacity = open ? '0' : '1';
+      b3.style.transform = open ? 'translateY(-7px) rotate(-45deg)' : 'none';
+    }
+  }
+
+  toggleMenu = () => this.setState({ menuOpen: !this.state.menuOpen });
+
+  go(page) {
+    if (page === this.state.page) { this.setState({ menuOpen: false }); return; }
+    const el = this.pageRef.current;
+    if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(10px)'; }
+    this.setState({ menuOpen: false });
+    clearTimeout(this.navTimer);
+    this.navTimer = setTimeout(() => {
+      this.setState({ page }, () => {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        const e2 = this.pageRef.current;
+        if (e2) { e2.style.opacity = '1'; e2.style.transform = 'none'; }
+      });
+    }, 190);
+  }
+
+  services() {
+    return [
+      { num: '01', title: 'Maçonnerie générale', short: "Murs, ouvertures, dalles, enduits : le savoir-faire de base de l'entreprise, exécuté aux règles de l'art.",
+        long: "Élévation de murs en parpaings, briques ou pierre, création et reprise d'ouvertures, linteaux, chaînages, dalles béton, enduits de façade et rejointoiement. Chaque intervention structurelle est calculée avant d'être posée : reprise en sous-œuvre, étaiement, ferraillage conformes aux règles de l'art.",
+        tags: ['Murs & cloisons', 'Ouvertures', 'Dalles béton', 'Enduits', 'Pierre'], imgId: 'sf-maconnerie',
+        imgPh: AD + " Maçonnerie : maçon truelle en main montant un mur de pierre claire, joints frais, poussière dans la lumière rasante" },
+      { num: '02', title: 'Rénovation', short: 'Rénovation partielle ou complète : démolition, structure, second œuvre, finitions.',
+        long: "Nous prenons en charge la rénovation d'une pièce comme celle d'une maison entière : démolition maîtrisée et évacuation des gravats, mise à nu et traitement des structures existantes, poutres et cheminées conservées et valorisées, planchers, cloisons, sols et finitions. Un planning est remis avant le démarrage et tenu jusqu'à la réception.",
+        tags: ['Démolition', 'Poutres apparentes', 'Cheminées', 'Sols', 'Second œuvre'], imgId: 'sf-renovation',
+        imgPh: AD + " Rénovation : pièce ancienne à poutres apparentes en cours de reprise, cheminée en pierre, lumière dorée par la fenêtre" },
+      { num: '03', title: 'Gros œuvre', short: 'Fondations, extensions, planchers : tout ce qui porte la maison.',
+        long: "Terrassement des fondations, semelles filantes, murs porteurs, planchers et poteaux : le gros œuvre est le cœur technique de JS Construction. Extensions, garages, sous-sols et surélévations sont traités avec les mêmes exigences que le neuf, plans et niveaux vérifiés à chaque étape.",
+        tags: ['Fondations', 'Extensions', 'Murs porteurs', 'Planchers'], imgId: 'sf-grosoeuvre',
+        imgPh: AD + " Gros œuvre : fondations ferraillées et murs porteurs en parpaings d'une extension, fin de journée, ombres longues" },
+      { num: '04', title: 'Piscine', short: 'Piscines maçonnées, de la fouille aux margelles et à la plage.',
+        long: "Piscines en béton et parpaings maçonnés, réalisées intégralement par nos équipes : implantation, fouille, radier ferraillé, montage des parois, réseaux hydrauliques, enduit d'étanchéité, liner ou finition pierre, margelles, plage en bois ou en pierre naturelle. Un bassin maçonné vieillit mieux : il est réparable et se remodèle.",
+        tags: ['Bassin maçonné', 'Margelles', 'Plage bois ou pierre', 'Local technique'], imgId: 'sf-piscine',
+        imgPh: AD + " Piscine : bassin terminé eau sombre miroir, margelles pierre et plage bois, reflets dorés du soleil bas" },
+      { num: '05', title: 'Terrassement', short: 'Nivellement, accès, drainage, terrasses et abords extérieurs.',
+        long: "Décaissement, nivellement, création d'accès et d'allées, drainage et évacuation des eaux, murs de soutènement, terrasses béton coulées et dallages extérieurs. Le terrassement conditionne la tenue de tout l'ouvrage : nous le traitons comme une étape technique, pas comme un simple déblai.",
+        tags: ['Nivellement', 'Drainage', 'Terrasse béton', 'Allées & accès'], imgId: 'sf-terrassement',
+        imgPh: AD + " Terrassement : terrain nivelé et terrasse béton fraîchement talochée, mini-pelle en fond, poussière dorée" },
+      { num: '06', title: 'Climatisation', short: 'Pose de climatisation et pompes à chaleur air/air en neuf comme en rénovation.',
+        long: "Installation de climatisations réversibles et de pompes à chaleur air/air, mono ou multi-split, avec passage des liaisons intégré au chantier de maçonnerie — traversées, saignées et reprises réalisées proprement. Dimensionnement adapté à la pièce et aux performances réelles du bâti après rénovation.",
+        tags: ['Réversible', 'Mono & multi-split', 'Pompe à chaleur air/air'], imgId: 'sf-clim',
+        imgPh: AD + " Climatisation : unité extérieure de pompe à chaleur installée au pied d'une façade pierre, liaisons soignées, lumière chaude" },
+      { num: '07', title: 'Plomberie', short: "Réseaux d'eau, évacuations, sanitaires : posés au bon moment du chantier.",
+        long: "Création et reprise des réseaux d'alimentation et d'évacuation, alimentation des points d'eau, pose de sanitaires, raccordements salle de bains et cuisine, réseaux enterrés et regards. Intégrée à nos chantiers de maçonnerie, la plomberie est passée avant les finitions : pas de saignée improvisée après coup.",
+        tags: ['Alimentation & évacuation', 'Sanitaires', 'Salle de bains', 'Réseaux enterrés'], imgId: 'sf-plomberie',
+        imgPh: AD + " Plomberie : réseaux cuivre et PER neufs alignés dans une saignée de mur, collecteur et évacuations, salle de bains en chantier" },
+      { num: '08', title: 'Électricité', short: 'Réseaux électriques, tableaux et appareillage, en rénovation comme en extension.',
+        long: "Passage des gaines et câbles, pose de tableaux et de l'appareillage, mise en conformité des installations anciennes, alimentation des extensions, du local technique de piscine et des extérieurs. Les réseaux sont tirés pendant le gros œuvre, dans les saignées et réservations prévues au plan.",
+        tags: ['Tableaux', 'Mise en conformité', 'Extensions', 'Extérieurs & local technique'], imgId: 'sf-electricite',
+        imgPh: AD + " Électricité : tableau électrique neuf ouvert, peignes et disjoncteurs alignés, câblage repéré, mains d'électricien" },
+      { num: '09', title: 'Placo & peinture', short: 'Cloisons, doublages, plafonds et finitions peinture pour livrer une pièce prête à vivre.',
+        long: "Cloisons et doublages placo, isolation intérieure, faux plafonds, bandes et enduits, ratissage puis mise en peinture. C'est l'étape qui transforme un chantier en pièce habitable : nous la traitons avec le même soin que la structure, surfaces contrôlées en lumière rasante avant réception.",
+        tags: ['Cloisons & doublages', 'Isolation', 'Faux plafonds', 'Enduits & peinture'], imgId: 'sf-placo',
+        imgPh: AD + " Placo & peinture : cloisons placo montées et bandes enduites, rouleau en action sur mur fini, lumière rasante" }
+    ];
+  }
+
+  galleryAll() {
+    const p = (t) => AD + ' ' + t;
+    return [
+      { key: 'reno', cat: 'Rénovation & gros œuvre', title: 'Corps de ferme, pièce de vie', beforeId: 'g1-b', afterId: 'g1-a',
+        desc: "Poutres et cheminée d'origine conservées, sols refaits, murs repris : le volume retrouvé sans perdre le caractère du bâti.",
+        beforePh: p("AVANT : grande pièce ancienne abîmée, poutres noircies, cheminée en pierre, gravats au sol, même angle que l'après"),
+        afterPh: p("APRÈS : la même pièce finie sous le même angle, poutres nettoyées, cheminée mise en valeur, sol clair posé") },
+      { key: 'reno', cat: 'Rénovation & gros œuvre', title: 'Ouverture de mur porteur', beforeId: 'g2-b', afterId: 'g2-a',
+        desc: 'Étaiement, linteau et reprise de charge pour ouvrir la cuisine sur le séjour, sans toucher à la structure du plancher.',
+        beforePh: p("AVANT : mur porteur fermé entre cuisine et séjour, tracé de l'ouverture à la craie, même angle que l'après"),
+        afterPh: p("APRÈS : large ouverture réalisée sous le même angle, linteau intégré, enduit fini, lumière traversante dorée") },
+      { key: 'piscine', cat: 'Piscines', title: 'Bassin maçonné 8 × 4 m', beforeId: 'g3-b', afterId: 'g3-a',
+        desc: 'Radier ferraillé, parois en parpaings maçonnés, réseaux hydrauliques et enduit d’étanchéité, réalisés par nos équipes.',
+        beforePh: p('AVANT : fouille et radier ferraillé du futur bassin, banches et parpaings en attente, même angle que l’après'),
+        afterPh: p('APRÈS : piscine en eau sous le même angle, eau sombre miroir, margelles pierre, soleil bas sur le bassin') },
+      { key: 'piscine', cat: 'Piscines', title: 'Piscine et plage bois', beforeId: 'g4-b', afterId: 'g4-a',
+        desc: 'Bassin terminé et terrasse bois posée de niveau, local technique intégré à la maçonnerie existante.',
+        beforePh: p('AVANT : abords du bassin en terre nue, chape et réservations visibles, même angle que l’après'),
+        afterPh: p('APRÈS : plage en bois posée autour du bassin sous le même angle, bains de soleil, reflets dorés') },
+      { key: 'exterieur', cat: 'Extérieurs & terrassement', title: 'Terrasse béton 40 m²', beforeId: 'g5-b', afterId: 'g5-a',
+        desc: 'Décaissement, coffrage, ferraillage et coulage avec pente d’évacuation intégrée, finition talochée.',
+        beforePh: p('AVANT : jardin en pente non aménagé, terre et gravats, cordeau de niveau tendu, même angle que l’après'),
+        afterPh: p('APRÈS : terrasse béton finie sous le même angle, surface talochée nette, mobilier extérieur, ombres longues') },
+      { key: 'exterieur', cat: 'Extérieurs & terrassement', title: 'Accès et abords de maison', beforeId: 'g6-b', afterId: 'g6-a',
+        desc: 'Nivellement, drainage, allée et mur de soutènement : les abords traités comme un ouvrage, pas comme un déblai.',
+        beforePh: p('AVANT : accès boueux et talus instable devant la maison, ornières, même angle que l’après'),
+        afterPh: p('APRÈS : allée nivelée et mur de soutènement finis sous le même angle, façade rénovée, lumière dorée') }
+    ].map(g => ({
+      ...g,
+      beforeImg: 'assets/images/' + g.beforeId + '.jpg',
+      afterImg: 'assets/images/' + g.afterId + '.jpg'
+    }));
+  }
+
+  chip(active) {
+    return active
+      ? { border: GOLD, bg: 'rgba(227,185,104,.14)', color: '#F4D67A' }
+      : { border: 'rgba(245,245,244,.16)', bg: 'transparent', color: '#A19D96' };
+  }
+
+  renderVals() {
+    const all = this.galleryAll();
+    const cats = [
+      { key: 'tout', label: 'Tout' },
+      { key: 'reno', label: 'Rénovation & gros œuvre' },
+      { key: 'piscine', label: 'Piscines' },
+      { key: 'exterieur', label: 'Extérieurs & terrassement' }
+    ];
+    const types = ['Maçonnerie', 'Rénovation', 'Gros œuvre', 'Piscine', 'Terrassement', 'Climatisation', 'Plomberie', 'Électricité', 'Placo & peinture'];
+    const nav = [
+      { label: 'Accueil', page: 'accueil' },
+      { label: 'Nos savoir-faire', page: 'savoirfaire' },
+      { label: 'Réalisations', page: 'realisations' },
+      { label: 'Contact', page: 'contact' }
+    ];
+    const wide = !this.state.narrow;
+
+    return {
+      navItems: nav.map(n => ({
+        label: n.label,
+        go: () => this.go(n.page),
+        color: this.state.page === n.page ? '#F4D67A' : '#B9B5AE',
+        underline: this.state.page === n.page ? 1 : 0
+      })),
+      goAccueil: () => this.go('accueil'),
+      goSavoirFaire: () => this.go('savoirfaire'),
+      goRealisations: () => this.go('realisations'),
+      goContact: () => this.go('contact'),
+      goLegal: () => this.go('legal'),
+      goPrivacy: () => this.go('privacy'),
+
+      isAccueil: this.state.page === 'accueil',
+      isSavoirFaire: this.state.page === 'savoirfaire',
+      isRealisations: this.state.page === 'realisations',
+      isContact: this.state.page === 'contact',
+      isLegal: this.state.page === 'legal',
+      isPrivacy: this.state.page === 'privacy',
+
+      narrow: this.state.narrow,
+      wide,
+      pageRef: this.pageRef,
+      menuRef: this.menuRef,
+      bar1Ref: this.bar1Ref,
+      bar2Ref: this.bar2Ref,
+      bar3Ref: this.bar3Ref,
+      toggleMenu: this.toggleMenu,
+
+      heroFacts: [
+        { k: '9 métiers', v: 'Tous les corps d\u2019état en interne' },
+        { k: 'Toute la France', v: 'Déplacement sur l\u2019ensemble du territoire' },
+        { k: '48 h', v: 'Réponse à votre demande de devis' },
+        { k: 'Devis gratuit', v: 'Étude et visite du chantier offertes' }
+      ],
+      services: this.services().map((s, i) => ({
+        ...s,
+        img: 'assets/images/' + s.imgId + '.jpg',
+        cols: wide ? (i % 2 === 0 ? '1.15fr .85fr' : '.85fr 1.15fr') : '1fr',
+        textOrder: wide && i % 2 === 1 ? 2 : 1,
+        imgOrder: wide && i % 2 === 1 ? 1 : 2
+      })),
+      reassurance: [
+        { t: 'Un interlocuteur unique', d: "JS Construction assure le suivi de chaque chantier, du devis à la réception. Vous n'avez qu'un numéro à composer." },
+        { t: 'Délais tenus', d: 'Un planning écrit est remis avant le démarrage, avec les dates de chaque phase et les interventions des autres corps de métier.' },
+        { t: "Tous les corps d'état", d: 'Maçonnerie, plomberie, électricité, placo et peinture réunis dans un seul devis : pas de coordination à gérer de votre côté.' },
+        { t: 'Partout en France', d: 'Nos équipes se déplacent sur toute la France. Nos chantiers sont visitables : demandez-nous les références les plus proches de chez vous.' }
+      ],
+      apercu: [all[0], all[2], all[4]].map(g => ({
+        cat: g.cat, title: g.title,
+        beforeImg: 'assets/images/' + g.beforeId + '.jpg', afterImg: 'assets/images/' + g.afterId + '.jpg'
+      })),
+
+      filters: cats.map(c => ({
+        label: c.label,
+        count: c.key === 'tout' ? all.length : all.filter(g => g.key === c.key).length,
+        go: () => this.setState({ filter: c.key }),
+        ...this.chip(this.state.filter === c.key)
+      })),
+      gallery: this.state.filter === 'tout' ? all : all.filter(g => g.key === this.state.filter),
+
+      projectTypes: types.map(t => ({
+        label: t,
+        go: () => this.setState({ fType: t, formError: false }),
+        ...this.chip(this.state.fType === t)
+      })),
+      fNom: this.state.fNom, fTel: this.state.fTel, fEmail: this.state.fEmail, fMsg: this.state.fMsg,
+      onNom: (e) => this.setState({ fNom: e.target.value, formError: false }),
+      onTel: (e) => this.setState({ fTel: e.target.value, formError: false }),
+      onEmail: (e) => this.setState({ fEmail: e.target.value }),
+      onMsg: (e) => this.setState({ fMsg: e.target.value }),
+      formError: this.state.formError,
+      formSent: this.state.sent,
+      formOpen: !this.state.sent,
+      submitForm: () => {
+        const ok = this.state.fNom.trim() && this.state.fTel.trim() && this.state.fType;
+        this.setState(ok ? { sent: true, formError: false } : { formError: true });
+        if (ok) window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+      resetForm: () => this.setState({ sent: false, fNom: '', fTel: '', fEmail: '', fMsg: '', fType: '' })
+    };
+  }
+}
+
+</script>
+
+
+</body></html>
