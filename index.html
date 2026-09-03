@@ -31,7 +31,7 @@
   <div style="position:sticky;top:0;z-index:50;background:rgba(10,10,10,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(227,185,104,.2)">
     <div style="max-width:1320px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:18px">
       <div sc-camel-on-click="{{ goAccueil }}" style="display:flex;align-items:center;gap:13px;cursor:pointer;flex:0 0 auto">
-        <img src="assets/images/logo-mark.png" alt="Logo JS Construction" style="width:44px;height:44px;object-fit:contain;display:block">
+        <img src="assets/images/logo.png" alt="Logo JS Construction" style="width:44px;height:44px;object-fit:contain;display:block">
         <div style="width:1px;height:36px;background:linear-gradient(180deg,rgba(227,185,104,0),#E3B968,rgba(227,185,104,0))"></div>
         <div style="display:flex;flex-direction:column;gap:3px">
           <div style="font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:18px;letter-spacing:.15em;line-height:1;color:#FFFFFF">JS <span style="color:#E3B968">CONSTRUCTION</span></div>
@@ -152,7 +152,7 @@
             <div data-reveal="1" sc-camel-on-click="{{ goSavoirFaire }}" style="position:relative;background:#101010;border:1px solid rgba(245,245,244,.08);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:rgba(227,185,104,.6);transform:translateY(-4px)">
               <div style="position:relative;height:210px;overflow:hidden">
                 <div style="position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.07)">
-                  <img src="{{ s.img }}" alt="{{ s.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;inset:0;background-image:url(&quot;{{ s.img }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
                 </div>
                 <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,16,16,.96),rgba(16,16,16,.15) 60%,rgba(10,10,10,.4));pointer-events:none"></div>
                 <div style="position:absolute;top:14px;left:14px;font-family:Archivo,Helvetica,sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;color:#E3B968;pointer-events:none">{{ s.num }}</div>
@@ -210,11 +210,11 @@
             <div data-reveal="1" sc-camel-on-click="{{ goRealisations }}" style="border:1px solid rgba(245,245,244,.08);background:#101010;cursor:pointer;display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:rgba(227,185,104,.55);transform:translateY(-4px)">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(227,185,104,.28)">
                 <div style="position:relative;height:210px;overflow:hidden">
-                  <img src="{{ p.beforeImg }}" alt="{{ p.title }} avant" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;inset:0;background-image:url(&quot;{{ p.beforeImg }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
                   <div style="position:absolute;top:10px;left:10px;padding:5px 9px;background:rgba(8,8,7,.86);font-family:Archivo,Helvetica,sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.2em;color:#B9B5AE;pointer-events:none">AVANT</div>
                 </div>
                 <div style="position:relative;height:210px;overflow:hidden">
-                  <img src="{{ p.afterImg }}" alt="{{ p.title }} après" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;inset:0;background-image:url(&quot;{{ p.afterImg }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
                   <div style="position:absolute;top:10px;left:10px;padding:5px 9px;background:linear-gradient(135deg,#B8860B,#F4D67A);font-family:Archivo,Helvetica,sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.2em;color:#0A0A0A;pointer-events:none">APRÈS</div>
                 </div>
               </div>
@@ -279,7 +279,7 @@
             </div>
             <div style="position:relative;min-height:300px;overflow:hidden;order:{{ s.imgOrder }}">
               <div style="position:absolute;inset:0;transition:transform .6s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
-                <img src="{{ s.img }}" alt="{{ s.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                <div style="position:absolute;inset:0;background-image:url(&quot;{{ s.img }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
               </div>
               <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,16,.55),transparent 45%);pointer-events:none"></div>
             </div>
@@ -321,13 +321,13 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(227,185,104,.28)">
               <div style="position:relative;height:clamp(200px,24vw,270px);overflow:hidden">
                 <div style="position:absolute;inset:0;transition:transform .55s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
-                  <img src="{{ g.beforeImg }}" alt="{{ g.title }} avant" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;inset:0;background-image:url(&quot;{{ g.beforeImg }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
                 </div>
                 <div style="position:absolute;top:12px;left:12px;padding:6px 10px;background:rgba(8,8,7,.86);border:1px solid rgba(245,245,244,.16);font-family:Archivo,Helvetica,sans-serif;font-size:10px;font-weight:800;letter-spacing:.2em;color:#B9B5AE;pointer-events:none">AVANT</div>
               </div>
               <div style="position:relative;height:clamp(200px,24vw,270px);overflow:hidden">
                 <div style="position:absolute;inset:0;transition:transform .55s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.06)">
-                  <img src="{{ g.afterImg }}" alt="{{ g.title }} après" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <div style="position:absolute;inset:0;background-image:url(&quot;{{ g.afterImg }}&quot;);background-size:cover;background-position:center;background-repeat:no-repeat"></div>
                 </div>
                 <div style="position:absolute;top:12px;left:12px;padding:6px 10px;background:linear-gradient(135deg,#B8860B,#F4D67A);font-family:Archivo,Helvetica,sans-serif;font-size:10px;font-weight:800;letter-spacing:.2em;color:#0A0A0A;pointer-events:none">APRÈS</div>
               </div>
@@ -544,7 +544,7 @@
     <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,5.5vw,66px) 20px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px">
       <div style="display:flex;flex-direction:column;gap:16px">
         <div style="display:flex;align-items:center;gap:12px">
-          <img src="assets/images/logo-footer.png" alt="Logo JS Construction" style="width:42px;height:42px;object-fit:contain;display:block">
+          <img src="assets/images/logo.png" alt="Logo JS Construction" style="width:42px;height:42px;object-fit:contain;display:block">
           <div style="width:1px;height:34px;background:linear-gradient(180deg,rgba(227,185,104,0),#E3B968,rgba(227,185,104,0))"></div>
           <div style="display:flex;flex-direction:column;gap:3px">
             <div style="font-family:Archivo,Helvetica,sans-serif;font-weight:900;font-size:16px;letter-spacing:.14em;color:#FFFFFF">JS <span style="color:#E3B968">CONSTRUCTION</span></div>
